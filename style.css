@@ -1,0 +1,18 @@
+#mapple, #viz {
+  width: 740px; 
+  height: 500px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 800px;
+  height: 700px;
+}
+
+#viz {
+    border: 3px solid red;
+}
+
+#mapple {
+    border: 3px solid darkcyan;
+}
+
