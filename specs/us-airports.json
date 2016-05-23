@@ -1,0 +1,99 @@
+{
+  "width": 900,
+  "height": 560,
+  "padding": {"top": 25, "left": 0, "right": 0, "bottom": 0},
+
+  "data": [
+    {
+      "name": "states",
+      "url": "data/us-10m.json",
+      "format": {"type": "topojson", "feature": "states"},
+      "transform": [
+        {
+          "type": "geopath", "projection": "albers",
+          "scale": 1200, "translate": [450, 280]
+        }
+      ]
+    },
+    {
+      "name": "traffic",
+      "url": "data/flights-airport.csv",
+      "format": {"type": "csv", "parse": "auto"},
+      "transform": [
+        {
+          "type": "aggregate", "groupby": ["origin"],
+          "summarize": [{"field": "count", "ops": ["sum"], "as": ["flights"]}]
+        }
+      ]
+    },
+    {
+      "name": "airports",
+      "url": "data/airports.csv",
+      "format": {"type": "csv", "parse": "auto"},
+      "transform": [
+        {
+          "type": "lookup", "on": "traffic", "onKey": "origin",
+          "keys": ["iata"], "as": ["traffic"]
+        },
+        {
+          "type": "filter",
+          "test": "datum.traffic != null"
+        },
+        {
+          "type": "geo", "projection": "albers",
+          "scale": 1200, "translate": [450, 280],
+          "lon": "longitude", "lat": "latitude"
+        },
+        {
+          "type": "filter",
+          "test": "datum.layout_x != null && datum.layout_y != null"
+        },
+        { "type": "sort", "by": "-traffic.flights" },
+        { "type": "voronoi", "x": "layout_x", "y": "layout_y" }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "size",
+      "type": "linear",
+      "domain": {"data": "traffic", "field": "flights"},
+      "range": [16, 1000]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "path",
+      "from": {"data": "states"},
+      "properties": {
+        "enter": {
+          "fill": {"value": "pink"},
+          "stroke": {"value": "white"}
+        },
+        "update": {
+          "path": {"field": "layout_path"},
+          "opacity": {"value": 0.3}
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": {"data": "airports"},
+      "properties": {
+        "enter": {
+          "size": {"scale": "size", "field": "traffic.flights"},
+          "fill": {"value": "steelblue"},
+          "fillOpacity": {"value": 0.8},
+          "stroke": {"value": "white"},
+          "strokeWidth": {"value": 1.5}
+        },
+        "update": {
+          "x": {"field": "layout_x"},
+          "y": {"field": "layout_y"}
+        }
+      }
+    }
+  ]
+}
