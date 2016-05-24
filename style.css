@@ -1,7 +1,10 @@
 #mapple, #viz {
-  width: 740px; 
-  height: 500px;
   position: absolute;
   top: 10px;
   left: 10px;
+}
+
+#viz {
+    /* To use leaflet's interaction features */
+    pointer-events: none;
 }
