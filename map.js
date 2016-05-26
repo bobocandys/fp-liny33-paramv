@@ -1,5 +1,6 @@
 var view; // Global variable
-d3.json("specs/us-airports.json", function(error, spec) {
+var map;
+d3.json("specs/us-airports-mercator.json", function(error, spec) {
   vg.parse.spec(spec, function(error, chart) { 
     view = chart({el:"#viz"}).update(); 
     setTileSize();
@@ -22,14 +23,37 @@ function setTileSize() {
   document.getElementById('viz').style.height    = finalHeight;
 }
 
+ // For leaflet
 function parseMap() {
-  // For leaflet
-  var map = L.map('mapple').setView([-41.2858, 174.78682], 14);
-      mapLink = 
-          '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-      L.tileLayer(
-          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; ' + mapLink + ' Contributors',
-          maxZoom: 14,
-          }).addTo(map);
+  /*
+  {s} means one of the available subdomains
+  {z} — zoom level
+  {x} and {y} — tile coordinates
+  */
+  map = L.map('mapple').setView([-41.2858, 174.78682], 14);
+  mapLink = 
+      '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+  L.tileLayer(
+      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; ' + mapLink + ' Contributors',
+      maxZoom: 14,
+      }).addTo(map);
+  
+  
+  console.log(view.data("geoBounds").values()[0]);      
+  var geoBounds = view.data('geoBounds').values()[0];
+  
+  var minLat = geoBounds.minLat, 
+    maxLat = geoBounds.maxLat, 
+    minLon = geoBounds.minLon, 
+    maxLon = geoBounds.maxLon;
+  
+  
+  
+  var southWest = L.latLng(minLat, minLon),
+    northEast = L.latLng(maxLat, maxLon),
+    bounds = L.latLngBounds(southWest, northEast);
+ 
+  map.fitBounds(bounds);
+  
 }

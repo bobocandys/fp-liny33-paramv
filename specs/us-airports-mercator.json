@@ -4,7 +4,7 @@
   "padding": {"top": 25, "left": 0, "right": 0, "bottom": 0},
   "signals": [{
     "name": "geoScale",
-    "init": 100 
+    "init": 150 
   }],
   "data": [
     {
@@ -53,6 +53,25 @@
         },
         { "type": "sort", "by": "-traffic.flights" },
         { "type": "voronoi", "x": "layout_x", "y": "layout_y" }
+      ]
+    },
+    {
+      "name": "geoBounds",
+      "source": "airports",
+      "transform": [
+        {
+          "type": "aggregate",
+          "summarize": [
+            {"field": "longitude", 
+             "ops": ["min", "max"], 
+             "as": ["minLon", "maxLon"]
+            },
+            {"field": "latitude", 
+             "ops": ["min", "max"], 
+             "as": ["minLat", "maxLat"]
+            }
+          ]
+        }
       ]
     }
   ],
