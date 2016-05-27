@@ -5,6 +5,7 @@ d3.json("specs/us-airports-mercator.json", function(error, spec) {
     view = chart({el:"#viz"}).update(); 
     setTileSize();
     parseMap();
+    adaptViewToMap();
   });
 });
 
@@ -39,21 +40,25 @@ function parseMap() {
       maxZoom: 14,
       }).addTo(map);
   
-  
-  console.log(view.data("geoBounds").values()[0]);      
-  var geoBounds = view.data('geoBounds').values()[0];
-  
+  // Have leaflet zoom to fit all the data points
+  var geoBounds = view.data('geoBounds').values()[0];  
   var minLat = geoBounds.minLat, 
     maxLat = geoBounds.maxLat, 
     minLon = geoBounds.minLon, 
     maxLon = geoBounds.maxLon;
-  
-  
-  
   var southWest = L.latLng(minLat, minLon),
     northEast = L.latLng(maxLat, maxLon),
     bounds = L.latLngBounds(southWest, northEast);
- 
+
   map.fitBounds(bounds);
-  
+}
+
+function adaptViewToMap() {
+  // Works fine without padding in the spec
+  view.signal("geoCenterLat", map.getCenter()["lat"]);
+  view.signal("geoCenterLon", map.getCenter()["lng"]);
+  view.signal("geoScale", (1 << 8 + map.getZoom()) / 2 / Math.PI);
+  view.signal("geoTranslateX", map.getSize()["x"] / 2)
+  view.signal("geoTranslateY", map.getSize()["y"] / 2);
+  view.update();
 }

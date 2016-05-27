@@ -1,11 +1,29 @@
 {
   "width": 900,
   "height": 560,
-  "padding": {"top": 25, "left": 0, "right": 0, "bottom": 0},
-  "signals": [{
+  "padding": {"top": 0, "left": 0, "right": 0, "bottom": 0},
+  "signals": [
+    {
     "name": "geoScale",
     "init": 150 
-  }],
+    },
+    {
+      "name": "geoCenterLat",
+      "init": 51
+    },
+    {
+      "name": "geoCenterLon",
+      "init": -120
+    },
+    {
+      "name": "geoTranslateX",
+      "init": 480
+    },
+    {
+      "name": "geoTranslateY",
+      "init": 250
+    }
+  ],
   "data": [
     {
       "name": "states",
@@ -14,7 +32,9 @@
       "transform": [
         {
           "type": "geopath", "projection": "mercator",
-          "scale": { "signal": "geoScale" }
+          "scale": { "signal": "geoScale" },
+          "center": [{"signal": "geoCenterLon"}, {"signal": "geoCenterLat"}],
+          "translate": [{"signal": "geoTranslateX"}, {"signal": "geoTranslateY"}]
         }
       ]
     },
@@ -44,8 +64,10 @@
         },
         {
           "type": "geo", "projection": "mercator",
+          "lon": "longitude", "lat": "latitude",
           "scale": { "signal": "geoScale" },
-          "lon": "longitude", "lat": "latitude"
+          "center": [{"signal": "geoCenterLon"}, {"signal": "geoCenterLat"}],
+          "translate": [{"signal": "geoTranslateX"}, {"signal": "geoTranslateY"}]
         },
         {
           "type": "filter",
@@ -81,7 +103,7 @@
       "from": {"data": "states"},
       "properties": {
         "enter": {
-          "fill": {"value": "pink"},
+          "fill": {"value": "black"},
           "stroke": {"value": "white"}
         },
         "update": {
@@ -96,9 +118,10 @@
       "properties": {
         "enter": {
           "fill": {"value": "steelblue"},
-          "fillOpacity": {"value": 0.8},
+          "fillOpacity": {"value": 0.6},
           "stroke": {"value": "white"},
-          "strokeWidth": {"value": 1.5}
+          "strokeWidth": {"value": 0.5},
+          "size": {"value": 40}
         },
         "update": {
           "x": {"field": "layout_x"},
