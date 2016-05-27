@@ -1,3 +1,3 @@
 # maps
 
-In the local directory, run `python -m SimpleHTTPServer 7000`. Go to `http://localhost:7000/`.
+In the local directory, run `python -m SimpleHTTPServer <port number>`. Go to `http://localhost:<port number>/`.
