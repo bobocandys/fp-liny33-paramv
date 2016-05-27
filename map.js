@@ -1,11 +1,16 @@
-var view; // Global variable
+// Global variables
+var view; 
 var map;
+
 d3.json("specs/us-airports-mercator.json", function(error, spec) {
   vg.parse.spec(spec, function(error, chart) { 
     view = chart({el:"#viz"}).update(); 
     setTileSize();
     parseMap();
     adaptViewToMap();
+    map.on('move', function(e) {
+      adaptViewToMap();
+    });
   });
 });
 
@@ -31,7 +36,7 @@ function parseMap() {
   {z} — zoom level
   {x} and {y} — tile coordinates
   */
-  map = L.map('mapple').setView([-41.2858, 174.78682], 14);
+  map = L.map('mapple').setView([47.653286, -122.305957], 14);
   mapLink = 
       '<a href="http://openstreetmap.org">OpenStreetMap</a>';
   L.tileLayer(
