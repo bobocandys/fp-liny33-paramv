@@ -1,6 +1,7 @@
 // Global variables
 var view; 
 var map;
+var updateCall; 
 
 /**
  * Use d3 to parse a json spec into a Vega spec.
@@ -13,7 +14,20 @@ d3.json("specs/us-airports-mercator.json", function(error, spec) {
     setDivSize();
     initializeMap();
     adaptViewToMap();
-    map.on('move', function(e) {
+    
+    map.on('zoomstart', function(e) {
+        console.log("start");
+        updateCall = requestAnimationFrame(adaptViewToMap);
+    });
+    map.on('zoomend', function(e) {
+      console.log("end");
+      cancelAnimationFrame(updateCall);
+    });
+    
+    map.on('viewreset', function(e) {
+      adaptViewToMap();
+    });
+    map.on('drag', function(e) {
       adaptViewToMap();
     });
   });
@@ -68,6 +82,7 @@ function initializeMap() {
  * Change the signal of the view so that the view is synced with the map.
  */
 function adaptViewToMap() {
+  console.log("adapt");
   var padding = view.padding();
   view.signal("geoCenterLat", map.getCenter()["lat"]);
   view.signal("geoCenterLon", map.getCenter()["lng"]);
