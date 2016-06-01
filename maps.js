@@ -2,6 +2,8 @@
 var view; 
 var map;
 var updateCall; 
+var framesPerSecond = 50;
+var running = true;
 
 /**
  * Use d3 to parse a json spec into a Vega spec.
@@ -15,21 +17,47 @@ d3.json("specs/us-airports-mercator.json", function(error, spec) {
     initializeMap();
     adaptViewToMap();
     
+    /*
     map.on('zoomstart', function(e) {
-        console.log("start");
-        updateCall = requestAnimationFrame(adaptViewToMap);
+      console.log("start");
+      updateCall = requestAnimationFrame(adaptViewToMap);
     });
+    
     map.on('zoomend', function(e) {
       console.log("end");
       cancelAnimationFrame(updateCall);
+    });*/
+    
+    map.on('zoomstart', function(e) {
+      console.log("zoom start");
+      document.getElementById('viz').style.display = "none";
     });
     
-    map.on('viewreset', function(e) {
+    map.on('zoomend', function(e) {
+      console.log("zoom end");
+      adaptViewToMap();
+      document.getElementById('viz').style.display = "";
+    });
+    
+    map.on('move', function(e) {
+      console.log("move");
       adaptViewToMap();
     });
-    map.on('drag', function(e) {
-      adaptViewToMap();
-    });
+    
+    function animate() {
+      if (running) {
+       setTimeout(function() {
+          requestAnimationFrame(animate);
+          adaptViewToMap();
+       }, 1000 / framesPerSecond);
+      }
+      cancelAnimationFrame(animate);
+    }
+    
+    // map.on('drag', function(e) {
+    //   //console.log("drag");
+    //   adaptViewToMap();
+    // });
   });
 });
 
@@ -61,7 +89,7 @@ function initializeMap() {
   L.tileLayer(
       'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; ' + mapLink + ' Contributors',
-      maxZoom: 14,
+      maxZoom: 14, 
       }).addTo(map);
   
   // Find the bounds in Vega visualization.
@@ -86,8 +114,8 @@ function adaptViewToMap() {
   var padding = view.padding();
   view.signal("geoCenterLat", map.getCenter()["lat"]);
   view.signal("geoCenterLon", map.getCenter()["lng"]);
-  view.signal("geoScale", (1 << 8 + map.getZoom()) / 2 / Math.PI);
-  view.signal("geoTranslateX", map.getSize()["x"] / 2 - padding.left);
-  view.signal("geoTranslateY", map.getSize()["y"] / 2 - padding.top);
+  view.signal("geoScale", (1 << 8 + map._zoom) / 2 / Math.PI);
+  view.signal("geoTranslateX", map._size["x"] / 2 - padding.left);
+  view.signal("geoTranslateY", map._size["y"] / 2 - padding.top);
   view.update();
 }
