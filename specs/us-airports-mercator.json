@@ -108,7 +108,7 @@
         },
         "update": {
           "path": {"field": "layout_path"},
-          "opacity": {"value": 0.3}
+          "opacity": {"value": 0.15}
         }
       }
     },
@@ -121,7 +121,7 @@
           "fillOpacity": {"value": 0.7},
           "stroke": {"value": "white"},
           "strokeWidth": {"value": 0.5},
-          "size": {"value": 50}
+          "size": {"value": 200}
         },
         "update": {
           "x": {"field": "layout_x"},
