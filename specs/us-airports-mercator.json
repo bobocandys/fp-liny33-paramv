@@ -1,11 +1,11 @@
 {
-  "width": 900,
-  "height": 560,
+  "width": 1500,
+  "height": 800,
   "padding": {"top": 25, "left": 25, "right": 25, "bottom": 25},
   "signals": [
     {
     "name": "geoScale",
-    "init": 150 
+    "init": 150
     },
     {
       "name": "geoCenterLat",
@@ -84,12 +84,12 @@
         {
           "type": "aggregate",
           "summarize": [
-            {"field": "longitude", 
-             "ops": ["min", "max"], 
+            {"field": "longitude",
+             "ops": ["min", "max"],
              "as": ["minLon", "maxLon"]
             },
-            {"field": "latitude", 
-             "ops": ["min", "max"], 
+            {"field": "latitude",
+             "ops": ["min", "max"],
              "as": ["minLat", "maxLat"]
             }
           ]
