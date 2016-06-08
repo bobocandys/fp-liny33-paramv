@@ -1,4 +1,4 @@
-# Vega-Lite - Projections
+# Vega-Lite Projections and Vega Tiles
 
 ## Quickstart
 In the local directory, run `python -m SimpleHTTPServer <port number>`. Go to `http://localhost:<port number>/`.
