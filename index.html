@@ -1,25 +1,64 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
 <head>
-    <title>Simple Leaflet Map</title>
-    <meta charset="utf-8" />
-    <link 
-        rel="stylesheet" 
-        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
-    />
-    <link rel="stylesheet" type="text/css" href="style.css">
-    
+  <title>CSE512: Data Visualization!</title>
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" type="text/css" href="http://courses.cs.washington.edu/courses/cse512/16sp/style.css"/>
+
 </head>
+
 <body>
-    <!-- Tile provider div -->
-    <div id="mapple"></div> 
-    <!-- Vega visualization div -->
-    <div id="viz"></div>
-    
-    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-    <script src="https://vega.github.io/vega-editor/vendor/d3.min.js"></script>
-    <script src="https://vega.github.io/vega-editor/vendor/d3.geo.projection.min.js"></script>
-    <script src="https://vega.github.io/vega/vega.min.js"></script>
-    <script src="maps.js"></script>
+  <div class='content wider'>
+
+    <div class='title'>
+      <a href="http://courses.cs.washington.edu/courses/cse512/15sp/"><strong>CSE512</strong></a>
+         Projects
+         <small>(Spring 2016)</small>
+    </div>
+    <br/>
+
+    <div class='pub' data-spy="scroll" data-target=".navbar">
+
+      <h1 class="title">Geographic Support for Vega-Lite</h1>
+      <div class="authors">
+        Vivek Paramasivam,
+        Youying Lin
+      </div>
+
+      <div class="figure">
+        <img src="summary.png" width="100%"/>
+        <div class="caption">Visualization of Airports in the US and their departures, produced from a Vega-Lite specification.</div>
+      </div>
+
+      <p>
+        We contribute Geographic support
+to Vega-Lite, a high-level grammar that enables rapid specification of interactive data visualizations. This project involved adding geographic projection to Vega-Lite and providing a tile layer to Vega/vega-embed. Ultimately, this allows for the use of the succinct Vega-Lite syntax to project latitude and longitude coordinates onto an Euclidean plane, as well as the ability to display more detailed geographic information about any given coordinates without the need for the user to supply that data.
+      </p>
+
+      <h2>Software</h2>
+      <p>
+        Try our geo-enabled version of Vega-Lite <a href="http://bobocandys.github.io/vega-editor/?mode=vega-lite&spec=airportsSized">here</a>.
+
+        Also, try our Tile-enabled vega visualization <a href="/maps.html">here</a>.
+      </p>
+
+      <h2>Materials</h2>
+      <div class="links">
+        <a href="final/paper-liny33-paramv.pdf" >PDF</a>
+        |
+        <a href="final/poster-liny33-paramv.pdf" >Poster</a>
+        |
+        <a href="https://github.com/bobocandys/fp-liny33-paramv">Code</a>
+      </div>
+
+      <div class='footer'>
+        <a href='http://cs.washington.edu'>Computer Science &amp; Engineering</a> -
+        <a href='http://www.washington.edu'>University of Washington</a>
+      </div>
+    </div>
+    <br/>
+    <br/>
+  </div>
 </body>
 </html>
