@@ -26,19 +26,6 @@
   ],
   "data": [
     {
-      "name": "states",
-      "url": "data/us-10m.json",
-      "format": {"type": "topojson", "feature": "states"},
-      "transform": [
-        {
-          "type": "geopath", "projection": "mercator",
-          "scale": { "signal": "geoScale" },
-          "center": [{"signal": "geoCenterLon"}, {"signal": "geoCenterLat"}],
-          "translate": [{"signal": "geoTranslateX"}, {"signal": "geoTranslateY"}]
-        }
-      ]
-    },
-    {
       "name": "traffic",
       "url": "data/flights-airport.csv",
       "format": {"type": "csv", "parse": "auto"},
@@ -98,20 +85,6 @@
     }
   ],
   "marks": [
-    {
-      "type": "path",
-      "from": {"data": "states"},
-      "properties": {
-        "enter": {
-          "fill": {"value": "black"},
-          "stroke": {"value": "white"}
-        },
-        "update": {
-          "path": {"field": "layout_path"},
-          "opacity": {"value": 0.15}
-        }
-      }
-    },
     {
       "type": "symbol",
       "from": {"data": "airports"},
