@@ -3,6 +3,7 @@
 ## Quickstart
 In the local directory, run `python -m SimpleHTTPServer <port number>`. Go to `http://localhost:<port number>/`.
 
+Alternatively, visit http://bobocandys.github.io/fp-liny33-paramv/ for links to both our **Vega-Lite Projection** editable examples as well as our **Tile-Layer-enabled Vega** example.
 
 ## Team Members
 Youying Lin - liny33
